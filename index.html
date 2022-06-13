@@ -11,26 +11,9 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Surfing Judge System</title>
-
-
-
-
-
-
 </head>
 
 <body>
-
-
-
-
-
-
-
-
-
-
-
 
 	<h3>maintenance port (do not enter)</h3>
 	<!-- 発言フォーム -->
@@ -56,7 +39,7 @@
 		// Socket.ioサーバへ接続
 		//-------------------------------------
 		const socket = io();
-
+    var s_time = null;
 		/**
 		 * [イベント] フォームが送信された    （自分からの）入力値の受信→サーバに送信
 		 */
@@ -71,11 +54,15 @@
 				return (false);
 			}
 
+      s_time = new Date();
 			// Socket.ioサーバへ送信
 			socket.emit("post", { text: msg.value });
 
 			// 発言フォームを空にする
 			msg.value = "";
+
+
+
 		});
 
 		/**
@@ -92,6 +79,9 @@
 			li.innerHTML = msg.text;
 			list.insertBefore(li, list.firstChild);
 
+      var e_time = new Date();
+      var diff = e_time.getTime() - s_time.getTime();
+      console.log("経過時間(ミリ秒):", diff);       //  localでは3ms
 
 		});
 
